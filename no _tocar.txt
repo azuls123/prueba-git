@@ -2,3 +2,7 @@ este archivo es para una prueba mas avanzada
 se guardara en este estado inicial y luego se editara
 se lo tendra editado pero se borrara de staging
 para no guardar los cambios hasta pasados ya un tiempo
+
+ahora, voy a probar esta funcion head para realizar varios cambios en este archivop
+pero no los voy a guardar ni enviar en commits, los quitare de staging y los enviare
+en otros comits que hayan despues
