@@ -1,0 +1,4 @@
+este archivo es para una prueba mas avanzada
+se guardara en este estado inicial y luego se editara
+se lo tendra editado pero se borrara de staging
+para no guardar los cambios hasta pasados ya un tiempo
