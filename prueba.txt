@@ -2,6 +2,6 @@ Aqui voy a incluir un texto de prueba
 esta linea esta bien
 esta linea esta bien
 esta linea esta bien
-esta linea esta bien
-esta linea esta bien
-esta linea esta bien
+
+aqui voy a probar el git soft
+linea para el soft, a ver que pasa

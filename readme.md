@@ -10,3 +10,9 @@ v:0.0.3 --> Index.html      -> Eliminando etiquetas de lista incesarias
                             -> agregando archivos de prueba:
         --> Prueba.txt      -> agregando lineas para practicar resets
         --> No_tocar.txt    -> agregando lineas para probar la manera de retener ese cambio sin guardar en los comits
+// v:0.0.4 --> Prueba.txt      -> Cambiando Lineas
+v:0.0.5 --> No_tocar.txt    -> estado cambiado a untracked
+        --> Index.html      -> corregido cambios
+
+v:0.0.6 --> Prueba.txt      -> ediciones
+v:0.0.7 --> Prueba.txt      -> ediciones para el soft
