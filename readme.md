@@ -1,0 +1,1 @@
+Creando archivo de readme para practicar el manejo de los comandos de git.
