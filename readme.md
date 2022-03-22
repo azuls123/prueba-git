@@ -16,3 +16,5 @@ v:0.0.5 --> No_tocar.txt    -> estado cambiado a untracked
 
 v:0.0.6 --> Prueba.txt      -> ediciones
 v:0.0.7 --> Prueba.txt      -> ediciones para el soft
+v:0.0.7f--> Creacion de nueva Branch
+v:0.0.8f--> Agregar Css ejemplo.css

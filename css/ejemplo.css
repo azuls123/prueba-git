@@ -1,11 +1,33 @@
 body {
     flex: content;
     padding: 4px;
-    background-color: #373737;
-    color: #d6d6d6;
-
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
 }
 h1 {
-    color: #eb9f9f;
+    color: #333;
     font-weight: 900;
+}
+#container {
+    width: 70%;
+    padding: 1em;
+    text-align: left;
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    box-shadow: 2px 2px 2px 2px #333;
+    border-radius: 6px;
+    margin: 0 auto;
+}
+
+#container h1 {
+    font-size: 20px;
+} 
+#container h2 {
+  font-size: 18px;  
+}
+#container ul li {
+    font-size: 16px;
 }
