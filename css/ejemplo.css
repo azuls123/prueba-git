@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: 16px;
+    font-family: hack;
 }
 h1 {
     color: #333;
@@ -13,7 +14,6 @@ h1 {
 }
 #container {
     width: 70%;
-    padding: 1em;
     text-align: left;
     background-color: #f9f9f9;
     border: 2px solid #ddd;
@@ -30,4 +30,22 @@ h1 {
 }
 #container ul li {
     font-size: 16px;
+}
+
+#cabecera {
+    background: #33a;
+    color: #fff;
+    margin: 0;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border-radius: 5px;
+    box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
+}
+#cabecera #tagline {
+    font-weight: normal;
+    font-size: 0.8em;
+    padding: 0 0 0 1em;
+}
+#post {
+    margin: 1em;
 }
