@@ -13,22 +13,14 @@ v:0.0.3     --> Index.html      -> Eliminando etiquetas de lista incesarias
 // v:0.0.4 --> Prueba.txt      -> Cambiando Lineas
 v:0.0.5     --> No_tocar.txt    -> estado cambiado a untracked
             --> Index.html      -> corregido cambios
-
-<<<<<<< HEAD
 v:0.0.6 --> Prueba.txt      -> ediciones
 v:0.0.7 --> Prueba.txt      -> ediciones para el soft
 v:0.0.7f--> Creacion de nueva Branch
 v:0.0.8f--> Agregar Css ejemplo.css
-v:0.0.11    --> index.html      -> modificando contenido
-            --> css/ejemplo.css -> modificando fuente a arial
-=======
-v:0.0.6     --> Prueba.txt      -> ediciones
-v:0.0.7     --> Prueba.txt      -> ediciones para el soft
-v:0.0.7f    --> Creacion de nueva Branch
-v:0.0.8f    --> Agregar Css ejemplo.css
 branch feature borrada
 branch cabecera creada
 v:0.0.9c    --> index.html      -> agregado div cabecera
 v:0.0.10c   --> index.html      -> estructura de la cabecera
             --> css/ejemplo.css -> estilo de cabecera
->>>>>>> cabecera
+v:0.0.11    --> index.html      -> modificando contenido
+            --> css/ejemplo.css -> modificando fuente a arial
