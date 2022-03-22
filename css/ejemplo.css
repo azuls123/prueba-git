@@ -1,0 +1,11 @@
+body {
+    flex: content;
+    padding: 4px;
+    background-color: #373737;
+    color: #d6d6d6;
+
+}
+h1 {
+    color: #eb9f9f;
+    font-weight: 900;
+}
