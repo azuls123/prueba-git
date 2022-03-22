@@ -1,7 +1,7 @@
 body {
     flex: content;
     padding: 4px;
-    color: #333;
+    color: rgb(111, 104, 104);
     text-align: center;
     margin: 0;
     padding: 0;
@@ -9,7 +9,7 @@ body {
     font-family: Arial;
 }
 h1 {
-    color: #333;
+    color: rgb(133, 58, 58);
     font-weight: 900;
 }
 #container {
