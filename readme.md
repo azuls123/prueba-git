@@ -18,3 +18,6 @@ v:0.0.6 --> Prueba.txt      -> ediciones
 v:0.0.7 --> Prueba.txt      -> ediciones para el soft
 v:0.0.7f--> Creacion de nueva Branch
 v:0.0.8f--> Agregar Css ejemplo.css
+branch feature borrada
+branch cabecera creada
+v:0.0.9c--> index.html      -> agregado div cabecera
