@@ -18,3 +18,5 @@ v:0.0.6 --> Prueba.txt      -> ediciones
 v:0.0.7 --> Prueba.txt      -> ediciones para el soft
 v:0.0.7f--> Creacion de nueva Branch
 v:0.0.8f--> Agregar Css ejemplo.css
+v:0.0.11    --> index.html      -> modificando contenido
+            --> css/ejemplo.css -> modificando fuente a arial
