@@ -17,10 +17,14 @@ Lista de Actualizaciones
       v:0.0.7 --> Prueba.txt      -> ediciones para el soft.
       v:0.0.7f--> Creacion de nueva Branch.
       v:0.0.8f--> Agregar Css ejemplo.css.
-    branch feature borrada.
-    branch cabecera creada.
+    branch feature borrada. (f)
+    branch cabecera creada. (c)
       v:0.0.9c    --> index.html      -> agregado div cabecera.
       v:0.0.10c   --> index.html      -> estructura de la cabecera.
                   --> css/ejemplo.css -> estilo de cabecera.
       v:0.0.11    --> index.html      -> modificando contenido.
                   --> css/ejemplo.css -> modificando fuente a arial.
+    branch staging-develop (d)
+      v:0.0.12d   --> Editada la imagen para el fondo
+                  --> index.html      -> cambios al fondo de container e imagen de fondo body
+                  
