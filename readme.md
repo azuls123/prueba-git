@@ -28,3 +28,6 @@ Lista de Actualizaciones
       v:0.0.12d   --> Editada la imagen para el fondo
                   --> index.html      -> cambios al fondo de container e imagen de fondo body
       v:0.0.13    --> Main Merge Staging-Develop
+    branch footer creada. (f)
+      v:0.0.14f   --> index.html      -> agregando footer
+                  --> css/ejemplo.css -> estilizando footer
