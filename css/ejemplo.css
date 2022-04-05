@@ -18,17 +18,16 @@ h1 {
     width: 70%;
     text-align: left;
     background-color: #f9f9f9;
-    border: 2px solid #ddd;
+    /* border: 2px solid #ddd; */
     box-shadow: 2px 2px 2px 2px #333;
-    border-radius: 6px, 0px, 0px, 0px;
+    border-radius: 2px 2px 16px 16px;
     margin: 0 auto;
     /* From https://css.glass */
     background: rgba(255, 255, 255, 0.61);
-    border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(1.1px);
     -webkit-backdrop-filter: blur(1.1px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* border: 1px solid rgba(255, 255, 255, 0.3); */
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
@@ -66,4 +65,24 @@ h1 {
 }
 #post {
     margin: 1em;
+}
+
+#footer {
+    flex: auto;
+    align-items: center;
+    padding: 0.5em;
+    /* From https://css.glass */
+    background: rgba(21, 21, 21, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.482);
+    backdrop-filter: blur(4.9px);
+    -webkit-backdrop-filter: blur(4.9px);
+    border: 1px solid rgb(54, 54, 54);
+}
+#footer h1 {
+    flex: auto;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+    text-align: center;
 }
