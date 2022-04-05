@@ -1,4 +1,7 @@
-Lista de Actualizaciones
+# Mi blog personal
+<p>aqu&iacute; he realizado un peque&ntilde;o proyecto de pruebas que me permite practicar mis habilidades con la herramienta de <b>GitHub</b>. </p>
+
+<h2>Lista de Actualizaciones</h2>
 
       v:0.0.0     - Creando archivo de readme para practicar el manejo de los comandos de git.
       v:0.0.1     - Agregamos el index para trabajar y empezamos con el etiquetado de versiones.
