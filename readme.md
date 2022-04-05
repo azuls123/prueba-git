@@ -27,4 +27,4 @@ Lista de Actualizaciones
     branch staging-develop (d)
       v:0.0.12d   --> Editada la imagen para el fondo
                   --> index.html      -> cambios al fondo de container e imagen de fondo body
-                  
+      v:0.0.13    --> Main Merge Staging-Develop
