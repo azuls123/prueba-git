@@ -36,3 +36,6 @@
                   --> css/ejemplo.css -> estilizando footer
 
     Experimental functions loadeds!
+    Branch experimento (e) creada.
+      v:0.0.15e   --> readme.md       -> experimental
+    
