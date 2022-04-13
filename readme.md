@@ -34,3 +34,5 @@
     branch footer creada. (f)
       v:0.0.14f   --> index.html      -> agregando footer
                   --> css/ejemplo.css -> estilizando footer
+
+    Experimental functions loadeds!
