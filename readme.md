@@ -1,140 +1,346 @@
-# Iniciaci&oacute;n a Git
+# Guía de Comandos de Git
 
-**Git** es una base de datos de versionamiento, lo que permite guardar informacion sobre los cambios ocurridos dentro de un directorio repositorio, estos cambios los hace por archivo en caso de los binarios y por linea o fragmento de archivo en caso
-de texto plano.
+Este documento agrupa y explica los comandos esenciales de Git para la gestión de versiones, junto con buenas prácticas y comandos útiles adicionales.
 
-Los *comandos git* nos permitiran movernos atraves del historial de versiones, realizar cambios en el repositorio, clonarlo o agregar ramas alternativas a la principal, para ello hay que saber como funcionan estos comandos.
+## Índice
+- [Fundamentos de Git](#fundamentos-de-git)
+- [Configuración Inicial](#configuración-inicial)
+- [Comandos Básicos del Flujo de Trabajo Local](#comandos-básicos-del-flujo-de-trabajo-local)
+  - [Inicializar y Clonar](#inicializar-y-clonar)
+  - [Seguimiento de Cambios (Status, Add, Commit)](#seguimiento-de-cambios-status-add-commit)
+  - [Eliminar Archivos (Rm)](#eliminar-archivos-rm)
+- [Análisis y Comparación de Cambios](#análisis-y-comparación-de-cambios)
+- [Navegación y Visualización del Historial](#navegación-y-visualización-del-historial)
+- [Deshacer Cambios](#deshacer-cambios)
+  - [Git Reset](#git-reset)
+  - [Git Revert](#git-revert)
+  - [Git Commit --amend](#git-commit---amend)
+- [Ramas (Branches) y Fusión (Merge)](#ramas-branches-y-fusión-merge)
+  - [Gestión de Ramas (Branch, Checkout)](#gestión-de-ramas-branch-checkout)
+  - [Fusionar Ramas (Merge)](#fusionar-ramas-merge)
+  - [Rebase](#rebase)
+- [Trabajo con Repositorios Remotos](#trabajo-con-repositorios-remotos)
+  - [Gestión de Remotos (Remote)](#gestión-de-remotos-remote)
+  - [Subir y Bajar Cambios (Push, Pull)](#subir-y-bajar-cambios-push-pull)
+  - [Colaboración: Forks y Pull Requests](#colaboración-forks-y-pull-requests)
+- [Comandos para Casos Especiales](#comandos-para-casos-especiales)
+  - [Tags (Etiquetas)](#tags-etiquetas)
+  - [Git Stash (Guardado Temporal)](#git-stash-guardado-temporal)
+  - [Git Clean (Limpiar Archivos no Trackeados)](#git-clean-limpiar-archivos-no-trackeados)
+  - [Git Cherry-pick (Seleccionar Commits)](#git-cherry-pick-seleccionar-commits)
+  - [Git Reflog (El Registro de Referencias)](#git-reflog-el-registro-de-referencias)
+- [Búsqueda y Diagnóstico](#búsqueda-y-diagnóstico)
+  - [Buscar en Archivos (Grep)](#buscar-en-archivos-grep)
+  - [Buscar en Commits (Log -S)](#buscar-en-commits-log--s)
+  - [Estadísticas y Autoría (Shortlog, Blame)](#estadísticas-y-autoría-shortlog-blame)
+- [Alias y Personalización](#alias-y-personalización)
+- [Comandos Útiles Adicionales](#comandos-útiles-adicionales)
+- [Historial de Comandos del Sistema](#historial-de-comandos-del-sistema)
 
-## Estados de directorios
+---
 
-### Estados  de Seguimiento
+## Fundamentos de Git
+Git es un sistema de control de versiones que funciona como una base de datos de cambios. Guarda información sobre las modificaciones dentro de un directorio (repositorio). Lo hace por archivo completo en el caso de binarios, o por línea/fragmento en el caso de texto plano.
 
-Al momento de generar un nuevo proyecto o repositorio, es necesario establecer cuales son los ficheros y directorios en los que se efectuara el control de versiones, para separar uno de otro se utilizan los terminos ***Tracked*** y ***Untracked***
+Los archivos pasan por varios estados antes de ser registrados definitivamente:
 
-* Tracked
-  * Hace referencia a los ficheros que se van a ***Rastrear*** para poder llevar un control de sus cambios, estos entran a la Zona de ***Working Directory***
-* Untracked
-  * En cambio, ***Untracked***, deja de lado los ficheros y directorios, provocando que estos no tengan un historial de cambios y no se pueda regresar a alguna versi&oacute;n inicial o anterior estos estan en la Zona de ***Directory***
+- **Working Directory:** El directorio donde trabajas y haces modificaciones.
+- **Staging Area (Index):** Un área intermedia donde se preparan (agregan) los cambios que formarán parte del próximo commit.
+- **Git Repository:** La base de datos donde se almacenan los commits (las versiones guardadas).
 
-### Estados de ficheros
+El siguiente diagrama ilustra este flujo:
+[WORKING DIRECTORY]
+│
+│ (Modificas archivos)
+│
+▼
+[STAGING AREA]
+│
+│ (git add)
+│
+▼
+[GIT REPOSITORY]
+│
+│ (git commit)
+│
+▼
+[REPOSITORIO REMOTO] (Opcional, con git push)
 
-Dentro del proyecto, los ficheros pueden pasar por 4 estados b&aacute;sicos que ayudaran a tener un mejor control de los mismos, los cuales son:
-* Unchanged - Sin Cambios
-  * Son ficheros que *no han sido alterados ni modificados* de ninguna forma, es decir, estos ficheros no se tomarán en cuenta a la hora de almacenar cambios.
-* Modified - Modificado
-  * Son ficheros que sufireron alguna *modificación*, pero sus cambios aun no han sido guardados ni controlados
-* Staged - Preparado
-  * Son ficheros cuyos cambios han sido *preparados* para su almacenamiento, pero aun estan a la espera de la confirmacion de almacenamiento. Todos los ficheros que se encuentren en estado ***Staged*** se almacenan en el ***Área de Preparación*** o ***Staging Area***
-* Commited - Confirmado
-  * Son ficheros cuyos cambios han sido *preparados* y *confirmados* para su almacenamiento.
+---
 
-## Estados de Versionamiento
+## Configuración Inicial
+Antes de empezar a hacer commits, es necesario identificar al usuario que realiza los cambios.
 
-Los ssitemas de versionamiento como GIT suelen contar con varios estados o zonas en los que se ubican los cambios, cada uno tiene sus nombres y funciones pero aqu&iacute; solo veremos los de git. A estos estados tambien se los conoce como Flujo
+- `git config --list`
+    - Muestra toda la configuración actual de Git.
+- `git config --list --show-origin`
+    - Muestra la configuración y la ubicación de los archivos donde están definidas.
+- `git config --global user.name "Tu Nombre"`
+    - Configura el nombre de usuario de forma global para todos los repositorios.
+- `git config --global user.email "tu@email.com"`
+    - Configura el correo electrónico de forma global.
+- `git config --global core.editor "code --wait"`
+    - Comando útil para configurar Visual Studio Code como el editor por defecto para los mensajes de commit.
 
-### Flujo de Git
+---
 
-* Directory
-  * Es el directorio raiz o carpeta base del proyecto antes de su inicializaci&oacute;n, tambien se puede decir que es la parte f&iacute;sica del proyecto.
+## Comandos Básicos del Flujo de Trabajo Local
 
-* Working Directory
-  * ***Working Directory*** es la zona en la que se almacenan todos los ficheros y sub-directorios del proyecto, aqu&iacute; dentro los ficheros y sub carpeta pueden adquirir dos propiedades o estados, ***Tracked*** y ***Untracked***
+### Inicializar y Clonar
+- `git init`
+    - Inicializa un nuevo repositorio de Git en el directorio actual. Crea la carpeta oculta `.git` donde se almacenará toda la base de datos de versiones.
+- `git clone <url-del-repositorio>`
+    - Crea una copia local de un repositorio remoto existente.
 
-* Staggin Area
-  * La ***Staging Area*** &oacute; ***&Aacute;rea de Preparaci&oacute;n*** es la encargada de almacenar los ficheros que van siendo preparados para el almacenamiento y se encuentran a la espera de otros ficheros o de una confirmacion.
-* Git Repository
-  * En el ***Repositorio de Git*** ó ***Git Repository*** es donde se encuentran nuestros cambios almacenados y versionados.
+### Seguimiento de Cambios (Status, Add, Commit)
+- `git status`
+    - Muestra el estado actual del working directory y el staging area. Indica qué archivos han sido modificados, cuáles están en staging y cuáles no están siendo trackeados (untracked).
+- `git add <nombre-archivo>`
+    - Añade un archivo específico al staging area.
+- `git add .`
+    - Añade **todos** los archivos nuevos y modificados del directorio actual (y subdirectorios) al staging area.
+- `git commit -m "Mensaje descriptivo de los cambios"`
+    - Toma todos los archivos que están en el staging area y los guarda en el repositorio como un nuevo commit (una nueva versión). El mensaje debe ser claro y conciso.
+- `git commit -am "Mensaje descriptivo"`
+    - Es un atajo que combina `git add .` (solo para archivos ya trackeados) y `git commit -m`. Añade y commitea los cambios de archivos que Git ya está siguiendo, omitiendo el paso de `git add` manual. **No funciona para archivos nuevos (untracked).**
 
-## Ramas de Git
+### Eliminar Archivos (Rm)
+- `git rm <archivo>`
+    - Elimina el archivo tanto del working directory como del staging area, y prepara esta eliminación para el próximo commit. El historial del archivo no se borra, solo su versión actual.
+- `git rm --cached <archivo>`
+    - Elimina el archivo del staging area, pero lo mantiene en el working directory. El archivo deja de ser trackeado por Git (pasa a estado `untracked`). Es útil cuando agregaste un archivo por error (como archivos de configuración locales).
+- `git rm --force <archivo>`
+    - Elimina el archivo de Git (staging y working directory) y del disco duro. Úsalo con precaución, aunque el historial del archivo permanece en Git.
 
-Para llevar un mejor control deversiones e incluso, sergmentar el trabajo de una sección sin interferir con alguna otra 
+---
 
-## Comandos B&aacute;sicos
+## Análisis y Comparación de Cambios
+- `git diff`
+    - Compara los cambios en el working directory que **aún no** han sido agregados al staging area.
+- `git diff --staged` (o `git diff --cached`)
+    - Compara los cambios que ya están en el staging area (preparados para el próximo commit).
+- `git diff <id-commit-1> <id-commit-2>`
+    - Muestra las diferencias entre dos commits específicos.
+- `git show`
+    - Muestra los detalles del último commit: metadatos y los cambios (diff) que introdujo.
+- `git show <archivo>`
+    - Muestra los cambios de un archivo específico en el último commit.
+- `git show <id-commit>`
+    - Muestra los detalles de un commit en particular.
 
-### init
+---
 
-Este comando se utiliza para iniciar el proyecto en el cual vamos a aplicar el control de versiones y todas las demas ventajas de una base de datos de versionamiento
+## Navegación y Visualización del Historial
+- `git log`
+    - Muestra el historial de commits en el repositorio actual.
+- `git log --oneline`
+    - Muestra el historial de forma compacta, con cada commit en una sola línea (ID corto y mensaje).
+- `git log --graph`
+    - Muestra el historial como un gráfico de ramas y merges.
+- `git log -S"<palabra>"`
+    - Busca en el historial los commits que introdujeron o eliminaron una palabra o fragmento de código específico. (Explicado más adelante).
 
-### add *[uri]*
+---
 
-Este comando admite una direccion referente a un fichero o directorio *[uri]*, y nos permite agregarla al control de versiones, es decir, registrarla en la base de datos de versionamiento para poder llevar un control de este directorio o fichero *(siempre y cuando no este incluido en el .gitignore)*.
-En caso de necesitar agregar todo lo que se encuentre  se utiliza ***"."***.
+## Deshacer Cambios
+Es crucial entender la diferencia entre `reset` y `revert`. `reset` modifica el historial (peligroso en repositorios compartidos), mientras que `revert` crea un nuevo commit que deshace los cambios, manteniendo el historial intacto.
 
-***Ejemplo git add . -> agregamos todo el proyecto al control.***
+### Git Reset
+`git reset` mueve el puntero `HEAD` y la rama actual a un commit anterior, "borrando" los commits posteriores del historial. El efecto en el working directory y staging depende del modo usado.
+- `git reset --soft <id-commit>`
+    - Mueve `HEAD` al commit especificado, pero deja todos los cambios de los commits "borrados" en el staging area (preparados para un nuevo commit).
+- `git reset --mixed <id-commit>` (opción por defecto si no se especifica)
+    - Mueve `HEAD` al commit especificado y limpia el staging area. Los cambios de los commits "borrados" se quedan en el working directory (como modificaciones sin trackear).
+- `git reset --hard <id-commit>`
+    - **PELIGROSO.** Mueve `HEAD` al commit especificado y borra **todo** (staging area y working directory). Los cambios posteriores a ese commit se pierden en el directorio local.
+- `git reset HEAD <archivo>`
+    - Saca un archivo del staging area (`unstage`). Es lo contrario de `git add`. Los cambios en el archivo se mantienen en el working directory.
 
-### status
+### Git Revert
+- `git revert <id-commit>`
+    - Crea un **nuevo commit** que deshace todos los cambios introducidos por el commit especificado. Es la forma segura de deshacer cambios en repositorios compartidos, ya que no reescribe la historia.
 
-Este comando nos permite saber el estado actual de nuestro proyecto con respecto a cambios y estado de la version, y si estos han sido almacenados o no.
+### Git Commit --amend
+- `git commit --amend`
+    - Corrige el commit más reciente. Puede usarse para:
+        1.  Añadir archivos que olvidaste incluir en el último commit (si ya los agregaste con `git add`).
+        2.  Modificar el mensaje del último commit.
+    - Básicamente, reemplaza el último commit por uno nuevo.
 
-### rm --[flags] *[uri]*
+---
 
-***"rm"*** nos permite borrar o remover un directorio o fichero y puede ir acompa&ntilde;ado de "flags" para cambiar su comportamiento. Este comando no se puede usar sin antes indicarle como eliminar los ficheros que ingresamos.
+## Ramas (Branches) y Fusión (Merge)
 
-* --cached
-  * Elimina los archivos del ***Git Repository*** y del ***Staging Area***, pero mantiene los mismos dentro de nuestro ***Working Directory***, es decir, con este comando podemos pasar los ficheros de estado ***tracked*** a ***untraked***
-* --force
-  * Elimina los archivos tanto de ***Git*** como del disco duro. Al ***Git*** *guardar todos los estados de los ficheros* y su *historial*, es posible volver a *recuperar este fichero*, pero para ello hay que hacer uso de comandos *específicos*.
+### Gestión de Ramas (Branch, Checkout)
+- `git branch`
+    - Muestra la lista de ramas locales. La rama actual está marcada con un asterisco (`*`).
+- `git branch <nombre-de-la-nueva-rama>`
+    - Crea una nueva rama a partir del commit actual en el que te encuentras.
+- `git checkout <nombre-de-la-rama>`
+    - Cambia a la rama especificada. Actualiza el working directory para reflejar el estado de esa rama.
+- `git checkout -b <nombre-de-la-nueva-rama>`
+    - Crea una nueva rama y se cambia a ella en un solo paso.
+- `git branch -d <nombre-de-la-rama>`
+    - Elimina una rama que ya ha sido fusionada (merge). Usa `-D` para forzar el borrado aunque no se haya fusionado.
+- `git branch -r`
+    - Muestra todas las ramas remotas.
+- `git branch -a`
+    - Muestra todas las ramas, tanto locales como remotas.
 
-### commit [flags]
+### Fusionar Ramas (Merge)
+- `git merge <nombre-de-la-rama-a-incorporar>`
+    - Integra los cambios de la rama especificada (`<nombre-de-la-rama-a-incorporar>`) en la rama en la que te encuentras actualmente (por ejemplo, `main`).
+    - **Proceso típico:**
+        1.  `git checkout main` (te posicionas en la rama que recibirá los cambios).
+        2.  `git merge cabecera` (fusionas la rama `cabecera` en `main`).
+    - Si hay conflictos, Git los marcará en los archivos. Deberás resolverlos manualmente (o con ayuda de tu editor), luego hacer `git add` y finalmente `git commit` para completar el merge.
 
-El comando Commit confirma los cambios realizados en los ficheros siempre y cuando estos hayan pasado al estado de preparados, sino se dejaran fuera. El comando de confirmación no se suele usar sin adjuntar un mensaje (a menos que sea un ammend) mediante la flag -m y una cadena **String**. Flags Disponibles:
+### Rebase
+- `git rebase <nombre-de-la-rama-base>`
+    - Reaplica los commits de la rama actual sobre la punta de otra rama. Reescribe la historia, creando commits nuevos. Se usa para mantener un historial lineal y limpio, especialmente en ramas locales.
+    - **Uso común para actualizar una rama de característica con los cambios de `main`:**
+        1.  `git checkout feature`
+        2.  `git rebase main` (los commits de `feature` se aplican ahora después de los de `main`).
+        3.  Luego, desde `main`, hacer un merge que será fast-forward: `git checkout main` y `git merge feature`.
+    - **Advertencia:** No hagas `rebase` en ramas que otros desarrolladores estén usando. Es una operación que reescribe la historia y puede causar confusión.
+- `git rebase --continue`
+    - Después de resolver conflictos durante un rebase, continúa con el proceso.
+- `git rebase --abort`
+    - Aborta la operación de rebase en curso y vuelve al estado inicial.
 
-* -a
-  * Nos permite agregar automáticamente todos los cambios realizados al Staging Area sin usar el comando git add
-* -m
-  * Esta flag nos permite adjuntar el mensaje que identificara los cambios realizados en git al incluir una cadena de **String** con el mismo.
-* --ammend
-  * Esta flag nos permite incluir los cambios actuales al commit anterior, se usa en caso de que no se hayan realizado todos los cambios o que un fichero no se puso en stag.
+---
 
+## Trabajo con Repositorios Remotos
 
-<hr>
+### Gestión de Remotos (Remote)
+- `git remote add origin <url-del-repositorio>`
+    - Vincula tu repositorio local con un repositorio remoto. Por convención, el remoto principal se llama `origin`.
+    - Es recomendable usar la URL SSH para una comunicación más segura, sin necesidad de introducir usuario y contraseña cada vez.
+- `git remote -v`
+    - Muestra las URLs de los repositorios remotos configurados (para fetch y push).
+- `git remote remove <nombre-del-remoto>` (ej. `origin`)
+    - Elimina la asociación con un repositorio remoto.
 
+### Subir y Bajar Cambios (Push, Pull)
+- `git pull <nombre-remoto> <nombre-rama>` (ej. `git pull origin main`)
+    - Descarga los cambios del repositorio remoto y los fusiona (`merge`) en la rama actual. Es equivalente a `git fetch` seguido de `git merge`.
+- `git push <nombre-remoto> <nombre-rama>` (ej. `git push origin main`)
+    - Envía los commits de tu rama local al repositorio remoto.
+- `git push origin --tags`
+    - Envía todas las etiquetas (tags) locales al repositorio remoto.
 
-## history
+### Colaboración: Forks y Pull Requests
+- **Fork:** No es un comando de Git, sino una acción en la interfaz de GitHub/GitLab. Crea una copia de un repositorio ajeno en tu cuenta.
+- `git remote add upstream <url-del-repositorio-original>`
+    - Después de clonar tu fork, añades el repositorio original como un remoto adicional (normalmente llamado `upstream`) para poder sincronizarte con sus cambios.
+- `git pull upstream main`
+    - Desde tu fork local, descargas y fusionas los cambios del repositorio original (`upstream/main`) para mantener tu copia actualizada.
+- `git push origin main`
+    - Subes los cambios (incluyendo los del `upstream` ya fusionados) a tu fork en GitHub.
+- **Pull Request (PR):** Es una petición en GitHub/GitLab para que el dueño del repositorio original revise y fusione los cambios de tu fork.
 
-Para ver el historial de comandos ejecutados escribimos history en la terminal git/linux
-y para volver a ejectuar esas lineas usamos *!+num.*
+---
 
-***Ejemplo: !23 nos volveria a ejectuar la linea #23 de nuestro historial.***
+## Comandos para Casos Especiales
 
+### Tags (Etiquetas)
+Los tags se usan para marcar puntos importantes en la historia, como versiones de lanzamiento (v1.0.0, v2.1.3).
 
-# Ejemplo: Mi blog personal
+- `git tag`
+    - Lista todos los tags existentes.
+- `git tag -a v1.0.0 -m "Mensaje de la versión" <id-commit>`
+    - Crea un tag anotado (`-a`) en un commit específico.
+- `git tag -d <nombre-del-tag>`
+    - Elimina un tag de tu repositorio local.
+- `git push origin :refs/tags/<nombre-del-tag>`
+    - Elimina un tag del repositorio remoto.
 
-<p>aqu&iacute; he realizado un peque&ntilde;o proyecto de pruebas que me permite practicar mis habilidades con la herramienta de <b>GitHub</b>. </p>
-<h2>Lista de Actualizaciones</h2>
+### Git Stash (Guardado Temporal)
+Guarda temporalmente los cambios no commiteados para limpiar el working directory, permitiéndote cambiar de rama o hacer otras operaciones.
 
-      v:0.0.0     - Creando archivo de readme para practicar el manejo de los comandos de git.
-      v:0.0.1     - Agregamos el index para trabajar y empezamos con el etiquetado de versiones.
-      v:0.0.2     --> Index.html      -> cambios en el titulo del documento
-                                      -> agregando primer titulo Quien soy?
-                                      -> agregando segundo titulo:    conociendome
-                                      -> agregando parrafo para conociendome  y redactando. 
-      v:0.0.3     --> Index.html      -> Eliminando etiquetas de lista incesarias
-                                      -> agregando archivos de prueba:
-                  --> Prueba.txt      -> agregando lineas para practicar resets
-                  --> No_tocar.txt    -> agregando lineas para probar la  manera de retener ese cambio sin guardar en los comits
-            // v:0.0.4 --> Prueba.txt      -> Cambiando Lineas.
-      v:0.0.5     --> No_tocar.txt    -> estado cambiado a untracked
-                  --> Index.html      -> corregido cambios.
-      v:0.0.6 --> Prueba.txt      -> ediciones.
-      v:0.0.7 --> Prueba.txt      -> ediciones para el soft.
-      v:0.0.7f--> Creacion de nueva Branch.
-      v:0.0.8f--> Agregar Css ejemplo.css.
-    branch feature borrada. (f)
-    branch cabecera creada. (c)
-      v:0.0.9c    --> index.html      -> agregado div cabecera.
-      v:0.0.10c   --> index.html      -> estructura de la cabecera.
-                  --> css/ejemplo.css -> estilo de cabecera.
-      v:0.0.11    --> index.html      -> modificando contenido.
-                  --> css/ejemplo.css -> modificando fuente a arial.
-    branch staging-develop (d)
-      v:0.0.12d   --> Editada la imagen para el fondo
-                  --> index.html      -> cambios al fondo de container e imagen de fondo body
-      v:0.0.13    --> Main Merge Staging-Develop
-    branch footer creada. (f)
-      v:0.0.14f   --> index.html      -> agregando footer
-                  --> css/ejemplo.css -> estilizando footer
+- `git stash`
+    - Guarda los cambios actuales (modificados y en staging) en una pila (stack) y revierte el working directory al último commit.
+- `git stash list`
+    - Muestra la lista de stashes guardados.
+- `git stash pop`
+    - Aplica los cambios del stash más reciente y lo elimina de la pila.
+- `git stash apply`
+    - Aplica los cambios del stash más reciente, pero lo mantiene en la pila.
+- `git stash drop`
+    - Elimina el stash más reciente.
+- `git stash branch <nombre-rama>`
+    - Crea una nueva rama a partir del commit donde se creó el stash y aplica los cambios del stash en ella. Útil si los cambios del stash generan conflictos en la rama actual.
 
-    Experimental functions loadeds!
-    Branch experimento (e) creada.
-      v:0.0.15e   --> readme.md       -> experimental
+### Git Clean (Limpiar Archivos no Trackeados)
+- `git clean --dry-run`
+    - Muestra una lista de los archivos no trackeados que serían eliminados, sin borrarlos realmente.
+- `git clean -f`
+    - Elimina forzosamente los archivos no trackeados.
+
+### Git Cherry-pick (Seleccionar Commits)
+- `git cherry-pick <id-commit>`
+    - Aplica los cambios de un commit específico en la rama actual, creando un nuevo commit (con un ID diferente). Es útil para traer una corrección específica de una rama a otra sin fusionar toda la rama.
+
+### Git Reflog (El Registro de Referencias)
+- `git reflog`
+    - Muestra un historial de dónde han apuntado `HEAD` y las ramas en tu repositorio local. Incluye commits, checkouts, resets, merges, etc. Es el "botón de deshacer" definitivo para operaciones locales.
+- `git reset --hard HEAD@{<n>}` o `git reset --hard <id-commit>`
+    - Después de encontrar el estado deseado en el `reflog`, puedes usar `git reset` para volver a ese punto, recuperando commits o ramas que creías perdidos.
+
+---
+
+## Búsqueda y Diagnóstico
+
+### Buscar en Archivos (Grep)
+- `git grep "<palabra>"`
+    - Busca una palabra o expresión regular dentro de los archivos trackeados por Git.
+- `git grep -n "<palabra>"`
+    - Muestra también el número de línea donde aparece la coincidencia.
+- `git grep -c "<palabra>"`
+    - Cuenta el número de veces que aparece la palabra en cada archivo.
+
+### Buscar en Commits (Log -S)
+- `git log -S"<palabra>"`
+    - Busca en el historial de commits aquellos que añadieron o eliminaron una cadena de texto específica en el código. (Es la "opción de la sopa de letras" o "pickaxe").
+
+### Estadísticas y Autoría (Shortlog, Blame)
+- `git shortlog -sn`
+    - Muestra un resumen de la actividad, agrupando los commits por autor y ordenados por número de commits.
+- `git shortlog -sn --all`
+    - Incluye commits que están en ramas no visibles o que han sido eliminados.
+- `git shortlog -sn --all --no-merges`
+    - Muestra la misma información, pero excluyendo los commits de fusión (merge).
+- `git blame <archivo>`
+    - Muestra el archivo línea por línea, indicando el autor, el commit y la fecha de la última modificación de cada línea. Muy útil para saber quién introdujo un cambio específico.
+- `git blame <archivo> -L <inicio>,<fin>`
+    - Limita la salida de `git blame` a un rango de líneas específico (ej. `-L 35,50`).
+
+---
+
+## Alias y Personalización
+Los alias permiten crear comandos personalizados para abreviar secuencias largas.
+
+- `git config --global alias.<nombre-alias> "<comando git>"`
+    - Crea un alias global. Ejemplo: `git config --global alias.tree "log --graph --oneline --all"`. Luego puedes usar `git tree`.
+- Alias de shell (Bash/Zsh):
+    - Se pueden crear en el archivo de configuración de la terminal (`.bashrc`, `.zshrc`). Ejemplo:
+      `alias see-road="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"`
+      Este alias proporciona una vista muy detallada y colorida del historial de Git.
+
+---
+
+## Comandos Útiles Adicionales
+- `git archive`
+    - Crea un archivo comprimido (`.zip` o `.tar`) de los archivos de un commit o tag específico. Útil para distribuir una versión sin el historial de Git.
+- `git bisect`
+    - Herramienta avanzada para hacer una búsqueda binaria en el historial y encontrar el commit exacto que introdujo un bug.
+- `git submodule`
+    - Permite incluir y gestionar otros repositorios de Git dentro del tuyo propio.
+
+---
+
+## Historial de Comandos del Sistema
+- `history`
+    - Este no es un comando de Git, sino de la terminal (Linux/macOS/Git Bash). Muestra el historial de todos los comandos ejecutados recientemente en la terminal.
+- `!<número>`
+    - Vuelve a ejecutar el comando que aparece en esa posición en la lista de `history`. Ejemplo: `!23` ejecutará el comando número 23 del historial.
