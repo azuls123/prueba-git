@@ -3,7 +3,7 @@
 Este documento agrupa y explica los comandos esenciales de Git para la gestión de versiones, junto con buenas prácticas y comandos útiles adicionales.
 
 ## Índice
-- [Antes de Iniciar, SSH](#antes-de-iniciar,-ssh)
+- [Antes de Iniciar, SSH](#antes-de-iniciar-ssh)
 - [Fundamentos de Git](#fundamentos-de-git)
 - [Configuración Inicial](#configuración-inicial)
 - [Comandos Básicos del Flujo de Trabajo Local](#comandos-básicos-del-flujo-de-trabajo-local)
