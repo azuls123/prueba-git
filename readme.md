@@ -3,6 +3,7 @@
 Este documento agrupa y explica los comandos esenciales de Git para la gestión de versiones, junto con buenas prácticas y comandos útiles adicionales.
 
 ## Índice
+- [Antes de Iniciar, SSH](#antes-de-iniciar,-ssh)
 - [Fundamentos de Git](#fundamentos-de-git)
 - [Configuración Inicial](#configuración-inicial)
 - [Comandos Básicos del Flujo de Trabajo Local](#comandos-básicos-del-flujo-de-trabajo-local)
@@ -36,6 +37,87 @@ Este documento agrupa y explica los comandos esenciales de Git para la gestión 
 - [Alias y Personalización](#alias-y-personalización)
 - [Comandos Útiles Adicionales](#comandos-útiles-adicionales)
 - [Historial de Comandos del Sistema](#historial-de-comandos-del-sistema)
+
+---
+
+## Antes de Iniciar, SSH
+
+Para conectarte a GitHub de forma segura sin usar usuario y contraseña cada vez, es recomendable usar una clave SSH. Sigue estos pasos:
+
+### 1. Generar nueva clave SSH
+
+Ejecuta el siguiente comando: 
+```bash
+ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
+```
+#### Explicación de los parámetros:
+
+- t rsa → especifica el tipo de algoritmo de cifrado (RSA).
+
+- b 4096 → indica el número de bits de la clave (mayor seguridad).
+
+- C → agrega un comentario (generalmente tu correo) para identificar la clave.
+
+#### Al ejecutarlo:
+
+- Te preguntará dónde guardar la clave → presiona Enter para aceptar la ubicación por defecto (~/.ssh/id_rsa).
+
+- Te pedirá una contraseña (passphrase) → opcional, pero recomendada por seguridad.
+
+### 2. Iniciar el Agente SSH y agregar la clave (en windows)
+
+Una vez generada la clave, debes asegurarte de que el agente SSH esté ejecutándose y agregar la clave privada:
+```bash
+eval $(ssh/agent -s)
+ssh-add ~/.ssh/id_rsa
+```
+#### Explicación:
+
+- eval $(ssh-agent -s) → inicia el agente SSH en segundo plano y configura las variables de entorno necesarias.
+
+- ssh-add ~/.ssh/id_rsa → agrega tu clave privada al agente SSH para que pueda ser utilizada en las conexiones.
+
+### 3. Agregar la clave pública a GitHub
+Copia el contenido de tu clave pública con:
+
+```bash
+cat ~/.ssh/id_rsa.pub
+```
+
+#### Luego:
+
+1. Ve a **GitHub** → haz clic en tu foto de perfil (arriba a la derecha).
+
+2. Selecciona **Settings → SSH and GPG keys**.
+
+3. Haz clic en **New SSH key**.
+
+4. Asigna un título (ej: "Mi PC principal").
+
+5. Pega el contenido de la clave pública en el campo **Key**.
+
+6. Haz clic en **Add SSH key**.
+
+### 4. Verificar la conexión
+Para comprobar que todo está funcionando correctamente:
+```bash
+ssh -T git@github.com
+```
+#### Resultados esperados:
+
+✅ Si ves un mensaje como Hi usuario! You've successfully authenticated... → la configuración fue exitosa.
+
+❌ Si ves un error de permisos o conexión, revisa que hayas copiado correctamente la clave pública en GitHub.
+
+
+
+generar llave ssh
+ssh-keygen -t rsa -b 4096 -C "youremail@example.com"
+
+Comprobar proceso y agregarlo (Windows)
+
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa 
 
 ---
 
